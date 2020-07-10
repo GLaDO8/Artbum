@@ -9,11 +9,11 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var playlistData = AppViewModel()
+    @ObservedObject var playlistData: AppViewModel
     
-    @State private var segmentedControlChoice = 0
-    private var textAlignment: [Alignment] = [.leading, .center, .trailing]
-    private var alignmentImageArray: [String] = ["text.alignleft", "text.aligncenter", "text.alignright"]
+    @State var segmentedControlChoice = 0
+    let textAlignment: [Alignment] = [.leading, .center, .trailing]
+    let alignmentImageArray: [String] = ["text.alignleft", "text.aligncenter", "text.alignright"]
     
     var body: some View {
         GeometryReader{ viewGeometry in
@@ -43,48 +43,49 @@ struct ContentView: View {
                     HStack{
                         ForEach(0..<self.playlistData.AlbumStyleArr.count){ index in
                             PlaylistStyleButton(style: self.playlistData.AlbumStyleArr[index]).onTapGesture{
-                                withAnimation(.linear){
-                                    self.playlistData.chooseStyle(button: self.playlistData.AlbumStyleArr[index])
-                                }
+                                self.playlistData.chooseStyle(button: self.playlistData.AlbumStyleArr[index])
                             }
-                        .padding(3)
                         }
                     }
-                .padding()
+                    .padding()
                 }
             }
         }
     }
     
     //MARK: - Control Knobs
-    private var albumArtCornerRadius: CGFloat = 16.0
-    private var albumArtShadowRadius: CGFloat = 12.0
+    let albumArtCornerRadius: CGFloat = 16.0
+    let albumArtShadowRadius: CGFloat = 12.0
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        let playlist = AppViewModel()
+        return ContentView(playlistData: playlist)
     }
 }
+
+
 
 struct PlaylistStyleButton: View{
     var style: AppModel.stylePickerButton
     
     var body: some View{
         ZStack{
-            if(style.isSelected){
+            Group{
                 Circle()
                     .stroke(lineWidth: selectionIndicatorCircleWidth)
                     .foregroundColor(Color.black)
-                    .frame(width: 60, height: 65)
-            }
+                    .frame(width: 60, height: 60)
+            }.opacity(style.isSelected ? 1 : 0)
             Image(uiImage: style.styleType!)
                 .resizable()
                 .clipShape(Circle())
                 .frame(width: 50, height: 50)
         }
+        
     }
-    var selectionIndicatorCircleWidth: CGFloat = 4.0
+    let selectionIndicatorCircleWidth: CGFloat = 4.0
 }
 
 struct PlaylistTitle: View{

@@ -9,7 +9,7 @@
 import SwiftUI
 
 class AppViewModel: ObservableObject{
-    @Published private var appModel: AppModel
+    @Published private(set) var appModel: AppModel
 
     init(){
         appModel = AppViewModel.gradientInit(gradientImagesArr: ["blueblue", "bluegreen", "purple", "copperblue", "purpleblue", "purplepink", "whitered"])
@@ -23,11 +23,14 @@ class AppViewModel: ObservableObject{
         return AppModel(albumStyleArr: tempArr)
     }
     
-    var AlbumStyleArr: [AppModel.stylePickerButton]{
-        return appModel.albumStyleArr
-    }
     
+    //MARK: - User Intents
     func chooseStyle(button: AppModel.stylePickerButton){
         appModel.chooseStyleButton(styleButton: button)
+    }
+    
+    //MARK: - Access to model
+    var AlbumStyleArr: [AppModel.stylePickerButton]{
+        return appModel.albumStyleArr
     }
 }

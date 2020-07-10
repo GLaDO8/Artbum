@@ -10,13 +10,12 @@ import UIKit
 
 struct AppModel{
     var albumStyleArr: [stylePickerButton]
-    var oneAndOnlySelectedStyleButton: Int?{
+    private var oneAndOnlySelectedStyleButton: Int?{
         get{
             albumStyleArr.indices.filter{albumStyleArr[$0].isSelected}.only
         }
         set{
             for index in albumStyleArr.indices{
-                print(index == newValue)
                 albumStyleArr[index].isSelected = (index == newValue)
             }
         }
@@ -25,11 +24,8 @@ struct AppModel{
     mutating func chooseStyleButton(styleButton: stylePickerButton){
         if let chosenStyleButton = albumStyleArr.indexOfFirstItemFound(of: styleButton){
             oneAndOnlySelectedStyleButton = chosenStyleButton
-//            print(chosenStyleButton)
-//            print(albumStyleArr[chosenStyleButton].isSelected)
         }
     }
-
     
     struct stylePickerButton: Identifiable{
         var id = UUID()
