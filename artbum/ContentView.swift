@@ -10,26 +10,15 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var playlistData: AppViewModel
-    
     @State var segmentedControlChoice = 0
+    @State var selectedGradient: UIImage?
     let textAlignment: [Alignment] = [.leading, .center, .trailing]
     let alignmentImageArray: [String] = ["text.alignleft", "text.aligncenter", "text.alignright"]
     
     var body: some View {
         GeometryReader{ viewGeometry in
             VStack{
-                GeometryReader{ imageGeometry in
-                    ZStack{
-                        Image("blueblue").resizable()
-                            .clipShape(RoundedRectangle(cornerRadius: self.albumArtCornerRadius))
-                            .frame(width: 300, height: 300)
-                            .shadow(color: Color((UIImage(named: "blueblue")?.averageColor)!) , radius: self.albumArtShadowRadius, x: 0, y: 0)
-                            .overlay(
-                                PlaylistTitle(titleText: "Old Skool Cool", textColor: Color.white, fontStyle: .largeTitle)
-                                    .frame(width: imageGeometry.size.width - 150, alignment: self.textAlignment[self.segmentedControlChoice]),
-                                alignment: .topLeading)
-                    }
-                }
+                AlbumArtPreview(selectedStyle: self.selectedGradient, textAlignment: self.textAlignment[self.segmentedControlChoice], title: PlaylistTitle(titleText: "Old Skool Cool", textColor: Color.white, fontStyle: .largeTitle))
                 
                 Picker(selection: self.$segmentedControlChoice, label: Text("alignment")){
                     ForEach(0..<self.alignmentImageArray.count){ index in
@@ -44,6 +33,7 @@ struct ContentView: View {
                         ForEach(0..<self.playlistData.AlbumStyleArr.count){ index in
                             PlaylistStyleButton(style: self.playlistData.AlbumStyleArr[index]).onTapGesture{
                                 self.playlistData.chooseStyle(button: self.playlistData.AlbumStyleArr[index])
+                                self.selectedGradient = self.playlistData.AlbumStyleArr[index].styleType
                             }
                         }
                     }
@@ -52,10 +42,6 @@ struct ContentView: View {
             }
         }
     }
-    
-    //MARK: - Control Knobs
-    let albumArtCornerRadius: CGFloat = 16.0
-    let albumArtShadowRadius: CGFloat = 12.0
 }
 
 struct ContentView_Previews: PreviewProvider {
@@ -65,7 +51,31 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-
+struct AlbumArtPreview: View{
+    var selectedStyle: UIImage?
+    var textAlignment: Alignment = .leading
+    var title: PlaylistTitle
+    
+    var body: some View{
+        GeometryReader{ imageGeometry in
+            ZStack{
+                Image(uiImage: ((self.selectedStyle == nil ? UIImage(named: "placeholder"): self.selectedStyle)!)) .resizable()
+                    .clipShape(RoundedRectangle(cornerRadius: self.albumArtCornerRadius))
+                    .frame(width: 300, height: 300)
+                    .shadow(color: self.selectedStyle == nil ? Color.white :  Color((self.selectedStyle?.averageColor)!) , radius: self.albumArtShadowRadius, x: 0, y: 0)
+                    .overlay(
+                        self.title
+                            .frame(width: imageGeometry.size.width - 150, alignment: self.textAlignment),
+                        alignment: .topLeading
+                )
+            }
+        }
+    }
+    
+    //MARK: - Album Art Control Knobs
+    let albumArtCornerRadius: CGFloat = 16.0
+    let albumArtShadowRadius: CGFloat = 12.0
+}
 
 struct PlaylistStyleButton: View{
     var style: AppModel.stylePickerButton
@@ -83,9 +93,10 @@ struct PlaylistStyleButton: View{
                 .clipShape(Circle())
                 .frame(width: 50, height: 50)
         }
-        
     }
-    let selectionIndicatorCircleWidth: CGFloat = 4.0
+    
+    //MARK: - Playlist Button Control Knobs
+    let selectionIndicatorCircleWidth: CGFloat = 3.0
 }
 
 struct PlaylistTitle: View{
