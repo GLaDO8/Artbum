@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3866F5FE24B9B13E0012FE6D /* Roboto-round-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3866F5FD24B9B13E0012FE6D /* Roboto-round-regular.ttf */; };
 		386FFD5C24B66567000CD2AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386FFD5B24B66567000CD2AD /* AppDelegate.swift */; };
 		386FFD5E24B66567000CD2AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386FFD5D24B66567000CD2AD /* SceneDelegate.swift */; };
 		386FFD6024B66567000CD2AD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386FFD5F24B66567000CD2AD /* ContentView.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3866F5FD24B9B13E0012FE6D /* Roboto-round-regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-round-regular.ttf"; sourceTree = "<group>"; };
 		386FFD5824B66567000CD2AD /* artbum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = artbum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		386FFD5B24B66567000CD2AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		386FFD5D24B66567000CD2AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +51,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3866F5FA24B993C50012FE6D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				3866F5FD24B9B13E0012FE6D /* Roboto-round-regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		386FFD4F24B66566000CD2AD = {
 			isa = PBXGroup;
 			children = (
@@ -80,6 +90,7 @@
 				386FFD6124B6656D000CD2AD /* Assets.xcassets */,
 				386FFD6624B6656D000CD2AD /* LaunchScreen.storyboard */,
 				386FFD6924B6656D000CD2AD /* Info.plist */,
+				3866F5FA24B993C50012FE6D /* Fonts */,
 				386FFD6324B6656D000CD2AD /* Preview Content */,
 			);
 			path = artbum;
@@ -152,6 +163,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				386FFD6824B6656D000CD2AD /* LaunchScreen.storyboard in Resources */,
+				3866F5FE24B9B13E0012FE6D /* Roboto-round-regular.ttf in Resources */,
 				386FFD6524B6656D000CD2AD /* Preview Assets.xcassets in Resources */,
 				386FFD6224B6656D000CD2AD /* Assets.xcassets in Resources */,
 			);
@@ -240,7 +252,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -294,7 +306,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
