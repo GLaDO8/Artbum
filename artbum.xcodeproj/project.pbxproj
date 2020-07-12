@@ -20,6 +20,7 @@
 		386FFD7824B7250A000CD2AD /* UIImage + AverageColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386FFD7724B7250A000CD2AD /* UIImage + AverageColor.swift */; };
 		38FAE44E24B850AE0077BE2B /* Array + identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FAE44D24B850AE0077BE2B /* Array + identifiable.swift */; };
 		38FAE45024B852880077BE2B /* Array + Only.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FAE44F24B852880077BE2B /* Array + Only.swift */; };
+		38FCA69C24BA0D0D002B4D75 /* AnimatableFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCA69B24BA0D0D002B4D75 /* AnimatableFont.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		386FFD7724B7250A000CD2AD /* UIImage + AverageColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + AverageColor.swift"; sourceTree = "<group>"; };
 		38FAE44D24B850AE0077BE2B /* Array + identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array + identifiable.swift"; sourceTree = "<group>"; };
 		38FAE44F24B852880077BE2B /* Array + Only.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array + Only.swift"; sourceTree = "<group>"; };
+		38FCA69B24BA0D0D002B4D75 /* AnimatableFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableFont.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				386FFD5F24B66567000CD2AD /* ContentView.swift */,
+				38FCA69B24BA0D0D002B4D75 /* AnimatableFont.swift */,
 				386FFD7524B7055D000CD2AD /* AppModel.swift */,
 				386FFD7324B70408000CD2AD /* AppViewModel.swift */,
 				386FFD7724B7250A000CD2AD /* UIImage + AverageColor.swift */,
@@ -176,6 +179,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38FCA69C24BA0D0D002B4D75 /* AnimatableFont.swift in Sources */,
 				386FFD7424B70408000CD2AD /* AppViewModel.swift in Sources */,
 				386FFD7624B7055D000CD2AD /* AppModel.swift in Sources */,
 				386FFD5C24B66567000CD2AD /* AppDelegate.swift in Sources */,

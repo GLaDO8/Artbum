@@ -18,7 +18,7 @@ struct ContentView: View {
     @State var appleMusicBrandingToggleValue = true
     static var roundedFont: Font = Font.custom("Roboto Rounded Regular.ttf", size: 12.0)
     
-    let textAlignment: [HorizontalAlignment] = [.leading, .center, .trailing]
+    let textAlignment: [Alignment] = [.leading, .center, .trailing]
     let alignmentImageArray: [String] = ["text.alignleft", "text.aligncenter", "text.alignright"]
     
     var body: some View {
@@ -29,16 +29,15 @@ struct ContentView: View {
                 TextField("Enter Title", text: self.$playlistTitleInput)
                 TextField("Enter SubTitle", text: self.$playlistSubtitleInput).textFieldStyle(RoundedBorderTextFieldStyle())
                 
-                
                 Picker(selection: self.$segmentedControlChoice, label: Text("alignment")){
                     ForEach(0..<self.alignmentImageArray.count){ index in
                         Image(systemName: self.alignmentImageArray[index]).tag(index)
                     }
                 }.pickerStyle(SegmentedPickerStyle())
                     .frame(width: viewGeometry.size.width - 100)
-               
-                appleMusicBrandingToggle(toggleValue: self.$appleMusicBrandingToggleValue)
                 
+                appleMusicBrandingToggle(toggleValue: self.$appleMusicBrandingToggleValue)
+                Spacer()
                 StyleTypeMenu(selection: self.$currentActiveStyleTypeMenuItem, menuWidth: viewGeometry.size.width)
                 
                 ScrollView(.horizontal, showsIndicators: false){
@@ -66,7 +65,7 @@ struct ContentView_Previews: PreviewProvider {
 
 struct AlbumArtPreview: View{
     var selectedStyle: UIImage?
-    var textAlignment: HorizontalAlignment = .leading
+    var textAlignment: Alignment = .leading
     var title: String
     var subtitle: String
     @Binding var isAMBranding: Bool
@@ -79,26 +78,28 @@ struct AlbumArtPreview: View{
                     .frame(width: 240, height: 240)
                     .shadow(color: self.selectedStyle == nil ? Color.gray :  Color((self.selectedStyle?.averageColor)!) , radius: self.albumArtShadowRadius, x: 0, y: 0)
                     .overlay(
-                        VStack(alignment: self.textAlignment){
-                            PlaylistText(titleText: self.title, textColor: Color.white, fontWeight: .heavy, fontSize: self.albumTitleFontSize, textOpacity: 1.0)
-                            PlaylistText(titleText: self.subtitle, textColor: Color.white, fontWeight: .medium, fontSize: self.albumSubtitleFontSize, textOpacity: 0.64)
-                                .padding(.top, -5)
-                            Spacer()
-                            if(self.isAMBranding){
-                                Group{
-                                    Text("APPLE MUSIC")
-                                        .fontWeight(.bold)
-                                        .font(.system(size: 10))
-                                        .foregroundColor(Color.white)
-                                        .padding(16)
+                        ZStack{
+                            VStack(){
+                                VStack(alignment: .leading){
+                                    Group{
+                                        PlaylistText(titleText: self.title, textColor: Color.white, fontWeight: .heavy, fontSize: self.albumTitleFontSize, textOpacity: 1.0)
+                                            .padding(.top, 28)
+                                        PlaylistText(titleText: self.subtitle, textColor: Color.white, fontWeight: .medium, fontSize: self.albumSubtitleFontSize, textOpacity: 0.64)
+                                            .padding(.top, -5)
+                                    }
+                                    .padding(.leading, 20)
                                 }
                             }
+                            .frame(width: 240, height: 240, alignment: .topLeading)
+                        if(self.isAMBranding){
+                            Text("APPLE MUSIC")
+                                .fontWeight(.bold)
+                                .font(.system(size: 10))
+                                .foregroundColor(Color.white)
+                                .padding(16)
+                                .frame(width: 240, height: 240, alignment: .bottomTrailing)
                         }
-                        .frame(width: 240)
-                        .padding(.top, 28)
-                        .padding(.leading, -8)
-                        ,
-                        alignment: .topLeading
+                    }
                 )
             }
         }
@@ -174,10 +175,12 @@ struct StyleTypeMenu: View{
     var menuWidth: CGFloat
     var menuItemNameArr:[String] = ["Gradients", "Patterns", "Images"]
     var body: some View{
-        HStack(alignment: .bottom){
+        HStack(alignment: .firstTextBaseline){
             ForEach(0..<menuItemNameArr.count){ index in
                 self.getStyleTypeMenuItem(for: index).onTapGesture{
-                      self.onTapSelectionChange(for: index)
+                    withAnimation(.easeInOut(duration: 0.2)){
+                        self.onTapSelectionChange(for: index)
+                    }
                 }
                 .padding(10)
             }
@@ -192,15 +195,14 @@ struct StyleTypeMenu: View{
         return
             VStack{
                 Text(menuItemNameArr[index])
-                    .font(Font.custom("Roboto-round-regular", size: isActive ? 24.0 : 22.0))
+                    .animatableFontModifier(size: isActive ? 24.0 : 22.0)
                     .foregroundColor(isActive ? Color.black : Color.gray)
         }
-            
+        
     }
     
     func onTapSelectionChange(for index: Int){
         self.selection = index
     }
-    
 }
 
