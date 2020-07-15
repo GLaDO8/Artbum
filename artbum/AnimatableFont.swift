@@ -9,8 +9,8 @@
 import SwiftUI
 
 struct AnimatableFont: AnimatableModifier {
-    
     var fontSize: CGFloat
+    
     var animatableData: CGFloat{
         get{
             self.fontSize
@@ -21,7 +21,8 @@ struct AnimatableFont: AnimatableModifier {
     }
     
     func body(content: Content) -> some View {
-        content.font(.custom("Roboto-round-regular", size: self.fontSize))
+        content
+            .font(.system(size: self.fontSize, weight: .semibold, design: .rounded))
     }
 }
 

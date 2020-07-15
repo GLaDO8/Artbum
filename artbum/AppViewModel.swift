@@ -10,6 +10,10 @@ import SwiftUI
 
 class AppViewModel: ObservableObject{
     @Published private(set) var appModel: AppModel
+    
+    var titlePos: CGRect?
+    var subtitlePos: CGRect?
+    var amBrandingPos: CGRect?
 
     init(){
         appModel = AppViewModel.gradientInit(gradientImagesArr: ["blueblue", "bluegreen", "purple", "copperblue", "purpleblue", "purplepink", "whitered"])
@@ -27,6 +31,14 @@ class AppViewModel: ObservableObject{
     //MARK: - User Intents
     func chooseStyle(button: AppModel.stylePickerButton){
         appModel.chooseStyleButton(styleButton: button)
+    }
+    
+    func GenerateAlbumArt(title: String, subtitle: String, isBranding: Bool){
+        appModel.ImageGenerator(titleLoc: titlePos!, subtitleLoc: subtitlePos!, brandingLoc: amBrandingPos!, titleString: title, subtitleString: subtitle, isbranding: isBranding)
+    }
+    
+    func getResultingImage() -> UIImage?{
+        return appModel.result
     }
     
     //MARK: - Access to model
