@@ -23,6 +23,9 @@ struct AppModel{
         }
     }
     
+    func getSelectedStyleIndex() -> Int?{
+        return oneAndOnlySelectedStyleButton
+    }
     
     mutating func chooseStyleButton(styleButton: stylePickerButton){
         if let chosenStyleButton = albumStyleArr.indexOfFirstItemFound(of: styleButton){
@@ -34,22 +37,59 @@ struct AppModel{
         let textColor = UIColor.white
         let style = albumStyleArr[oneAndOnlySelectedStyleButton!]
         let image = style.styleType!
-        let textFont = UIFont.systemFont(ofSize: CGFloat(36 * style.imageSize), weight: .heavy)
+        let titleTextFont = UIFont.systemFont(ofSize: CGFloat(36 * style.imageSize), weight: .heavy)
+        let subtitleTextFont = UIFont.systemFont(ofSize: CGFloat(34 * style.imageSize), weight: .medium)
+        let brandingTextFont = UIFont.systemFont(ofSize: CGFloat(10 * style.imageSize), weight: .bold)
         
         UIGraphicsBeginImageContextWithOptions(image.size, false, 0.0)
-        let textFontAttributes = [
-            NSAttributedString.Key.font: textFont,
+        
+        let titleTextFontAttributes = [
+            NSAttributedString.Key.font: titleTextFont,
             NSAttributedString.Key.foregroundColor: textColor,
             ] as [NSAttributedString.Key : Any]
+        
+        let subtitleTextFontAttributes = [
+            NSAttributedString.Key.font: subtitleTextFont,
+            NSAttributedString.Key.foregroundColor: textColor,
+            ] as [NSAttributedString.Key : Any]
+        
+        
+        
         image.draw(in: CGRect(origin: CGPoint.zero, size: image.size))
         
-        let rect = CGRect(
-            origin: CGPoint(
-                x: titleLoc.origin.x * style.imageSize,
-                y: titleLoc.origin.y * style.imageSize),
-            size: image.size)
+        title.draw(
+            in: CGRect(
+                origin: CGPoint(
+                    x: titleLoc.origin.x * style.imageSize,
+                    y: titleLoc.origin.y * style.imageSize),
+                size: image.size),
+            withAttributes: titleTextFontAttributes
+        )
         
-        title.draw(in: rect, withAttributes: textFontAttributes)
+        subtitle.draw(
+            in: CGRect(
+                origin: CGPoint(
+                    x: subtitleLoc.origin.x * style.imageSize,
+                    y: subtitleLoc.origin.y * style.imageSize),
+                size: image.size),
+            withAttributes: subtitleTextFontAttributes
+        )
+        
+        if (isbranding){
+            let brandingTextFontAttributes = [
+                NSAttributedString.Key.font: brandingTextFont,
+                NSAttributedString.Key.foregroundColor: textColor,
+                ] as [NSAttributedString.Key : Any]
+            
+            "APPLE MUSIC".draw(
+                in: CGRect(
+                    origin: CGPoint(
+                        x: brandingLoc.origin.x * style.imageSize,
+                        y: brandingLoc.origin.y * style.imageSize),
+                    size: image.size),
+                withAttributes: brandingTextFontAttributes
+            )
+        }
         
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()

@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		38616D7624BFAED900DA0C22 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38616D7524BFAED900DA0C22 /* ResultView.swift */; };
 		3866F5FE24B9B13E0012FE6D /* Roboto-round-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3866F5FD24B9B13E0012FE6D /* Roboto-round-regular.ttf */; };
 		386FFD5C24B66567000CD2AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386FFD5B24B66567000CD2AD /* AppDelegate.swift */; };
 		386FFD5E24B66567000CD2AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386FFD5D24B66567000CD2AD /* SceneDelegate.swift */; };
-		386FFD6024B66567000CD2AD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386FFD5F24B66567000CD2AD /* ContentView.swift */; };
+		386FFD6024B66567000CD2AD /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386FFD5F24B66567000CD2AD /* EditView.swift */; };
 		386FFD6224B6656D000CD2AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 386FFD6124B6656D000CD2AD /* Assets.xcassets */; };
 		386FFD6524B6656D000CD2AD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 386FFD6424B6656D000CD2AD /* Preview Assets.xcassets */; };
 		386FFD6824B6656D000CD2AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 386FFD6624B6656D000CD2AD /* LaunchScreen.storyboard */; };
@@ -24,11 +25,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		38616D7524BFAED900DA0C22 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		3866F5FD24B9B13E0012FE6D /* Roboto-round-regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-round-regular.ttf"; sourceTree = "<group>"; };
 		386FFD5824B66567000CD2AD /* artbum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = artbum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		386FFD5B24B66567000CD2AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		386FFD5D24B66567000CD2AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		386FFD5F24B66567000CD2AD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		386FFD5F24B66567000CD2AD /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		386FFD6124B6656D000CD2AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		386FFD6424B6656D000CD2AD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		386FFD6724B6656D000CD2AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -80,7 +82,8 @@
 		386FFD5A24B66567000CD2AD /* artbum */ = {
 			isa = PBXGroup;
 			children = (
-				386FFD5F24B66567000CD2AD /* ContentView.swift */,
+				386FFD5F24B66567000CD2AD /* EditView.swift */,
+				38616D7524BFAED900DA0C22 /* ResultView.swift */,
 				386FFD7524B7055D000CD2AD /* AppModel.swift */,
 				386FFD7324B70408000CD2AD /* AppViewModel.swift */,
 				386FFD7724B7250A000CD2AD /* UIImage + AverageColor.swift */,
@@ -181,10 +184,11 @@
 			files = (
 				38FCA69C24BA0D0D002B4D75 /* AnimatableFont.swift in Sources */,
 				386FFD7424B70408000CD2AD /* AppViewModel.swift in Sources */,
+				38616D7624BFAED900DA0C22 /* ResultView.swift in Sources */,
 				386FFD7624B7055D000CD2AD /* AppModel.swift in Sources */,
 				386FFD5C24B66567000CD2AD /* AppDelegate.swift in Sources */,
 				386FFD5E24B66567000CD2AD /* SceneDelegate.swift in Sources */,
-				386FFD6024B66567000CD2AD /* ContentView.swift in Sources */,
+				386FFD6024B66567000CD2AD /* EditView.swift in Sources */,
 				386FFD7224B6E9A9000CD2AD /* MainScreenView.swift in Sources */,
 				38FAE45024B852880077BE2B /* Array + Only.swift in Sources */,
 				386FFD7824B7250A000CD2AD /* UIImage + AverageColor.swift in Sources */,

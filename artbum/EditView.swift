@@ -8,32 +8,13 @@
 
 import SwiftUI
 
-
-struct ResultView: View{
-    var resultImage: UIImage?
-    
-    @ViewBuilder
-    var body: some View{
-        if(resultImage != nil){
-            Image(uiImage: resultImage!)
-                .resizable()
-                .clipShape(RoundedRectangle(cornerRadius: 16.0))
-                .frame(width: 300, height: 300)
-        }
-        else{
-            Image(systemName: "timer")
-        }
-    }
-}
-
 struct EditView: View {
-    @ObservedObject var playlistData: AppViewModel
+    @EnvironmentObject var playlistData: AppViewModel
     @State var segmentedControlChoice = 0
-    @State var selectedGradient: UIImage?
     @State var playlistTitleInput: String = "Rap Caviar"
     @State var playlistSubtitleInput: String = "Mix"
-    @State var currentActiveStyleTypeMenuItem = 0
     @State var appleMusicBrandingToggleValue = true
+    @State var currentSelectedPlaylistItem = 0
     @State var presentResult: Int? = 0
     
     let textAlignment: [Alignment] = [.leading, .center, .trailing]
@@ -43,7 +24,15 @@ struct EditView: View {
         NavigationView {
             GeometryReader{ viewGeometry in
                 VStack{
-                    AlbumArtPreview(selectedStyle: self.selectedGradient, textAlignment: self.textAlignment[self.segmentedControlChoice], title: "Rap Caviar", subtitle: "Mix", titleData: self.$playlistData.titlePos, subtitleData: self.$playlistData.subtitlePos, amData: self.$playlistData.amBrandingPos, isAMBranding: self.$appleMusicBrandingToggleValue)
+                    AlbumArtPreview(
+                        selectedStyle: self.playlistData.getSelectedStyleIndex() != nil ?
+                        self.playlistData.AlbumStyleArr[self.playlistData.getSelectedStyleIndex()!].styleType : nil,
+                        textAlignment: self.textAlignment[self.segmentedControlChoice],
+                        title: "Rap Caviar", subtitle: "Mix",
+                        titleData: self.$playlistData.titlePos,
+                        subtitleData: self.$playlistData.subtitlePos,
+                        amData: self.$playlistData.amBrandingPos,
+                        isAMBranding: self.$appleMusicBrandingToggleValue)
 
                     TextField("Enter Title", text: self.$playlistTitleInput)
                     TextField("Enter SubTitle", text: self.$playlistSubtitleInput).textFieldStyle(RoundedBorderTextFieldStyle())
@@ -55,25 +44,12 @@ struct EditView: View {
                     }.pickerStyle(SegmentedPickerStyle())
                         .frame(width: viewGeometry.size.width - 100)
                     
-                    Group{
-                        appleMusicBrandingToggle(toggleValue: self.$appleMusicBrandingToggleValue)
-                        StyleTypeMenu(selection: self.$currentActiveStyleTypeMenuItem)
-                    }
-                    .padding(.leading, 20)
-                    .frame(width: viewGeometry.size.width)
-                    ScrollView(.horizontal, showsIndicators: false){
-                        HStack{
-                            ForEach(0..<self.playlistData.AlbumStyleArr.count){ index in
-                                PlaylistStyleButton(style: self.playlistData.AlbumStyleArr[index]).onTapGesture{
-                                    self.playlistData.chooseStyle(button: self.playlistData.AlbumStyleArr[index])
-                                    self.selectedGradient = self.playlistData.AlbumStyleArr[index].styleType
-                                }
-                            }
-                        }
-                        .padding(.top, 5)
+                    appleMusicBrandingToggle(toggleValue: self.$appleMusicBrandingToggleValue)
                         .padding(.leading, 20)
-                        .padding(.bottom, 20)
-                    }
+                        .frame(width: viewGeometry.size.width)
+                    
+                    StyleTypeMenu(selection: self.$currentSelectedPlaylistItem)
+                    
                     NavigationLink(destination: ResultView(resultImage: self.playlistData.getResultingImage()), tag: 1, selection: self.$presentResult){
                         EmptyView()
                     }
@@ -83,7 +59,6 @@ struct EditView: View {
                     }){
                         Text("Done").font(.system(size: 15, weight: .medium, design: .rounded))
                     }.buttonStyle(taskFinishButtonStyle())
-                    
                 }
             }
         }
@@ -106,7 +81,7 @@ struct taskFinishButtonStyle: ButtonStyle{
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let playlist = AppViewModel()
-        return EditView(playlistData: playlist)
+        return EditView().environmentObject(playlist)
     }
 }
 
@@ -233,19 +208,39 @@ struct appleMusicBrandingToggle: View{
 struct StyleTypeMenu: View{
     //remembers the current selection
     @Binding var selection: Int
+    @EnvironmentObject var playlistData: AppViewModel
     var menuItemNameArr:[String] = ["Gradients", "Patterns", "Images"]
+    
+    @ViewBuilder
     var body: some View{
-        HStack(){
-            Group{
-                ForEach(0..<menuItemNameArr.count){ index in
-                    self.getStyleTypeMenuItem(for: index).onTapGesture{
-                        withAnimation(.easeInOut(duration: 0.2)){
-                            self.onTapSelectionChange(for: index)
+        VStack{
+            HStack{
+                Group{
+                    ForEach(0..<menuItemNameArr.count){ index in
+                        self.getStyleTypeMenuItem(for: index).onTapGesture{
+                            withAnimation(.easeInOut(duration: 0.2)){
+                                self.onTapSelectionChange(for: index)
+                            }
                         }
                     }
                 }
+                .padding(.trailing, 24)
             }
-            .padding(.trailing, 24)
+            
+            if(selection == 0){
+                ScrollView(.horizontal, showsIndicators: false){
+                    HStack{
+                        ForEach(0..<self.playlistData.AlbumStyleArr.count){ index in
+                            PlaylistStyleButton(style: self.playlistData.AlbumStyleArr[index]).onTapGesture{
+                                self.playlistData.chooseStyle(button: self.playlistData.AlbumStyleArr[index])
+                            }
+                        }
+                    }
+                    .padding(.top, 5)
+                    .padding(.leading, 20)
+                    .padding(.bottom, 20)
+                }
+            }
         }
     }
     

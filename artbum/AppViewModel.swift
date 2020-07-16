@@ -34,7 +34,10 @@ class AppViewModel: ObservableObject{
     }
     
     func GenerateAlbumArt(title: String, subtitle: String, isBranding: Bool){
-        appModel.ImageGenerator(titleLoc: titlePos!, subtitleLoc: subtitlePos!, brandingLoc: amBrandingPos!, titleString: title, subtitleString: subtitle, isbranding: isBranding)
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.appModel.ImageGenerator(titleLoc: self.titlePos!, subtitleLoc: self.subtitlePos!, brandingLoc: self.amBrandingPos!, titleString: title, subtitleString: subtitle, isbranding: isBranding)
+        }
+        
     }
     
     func getResultingImage() -> UIImage?{
@@ -44,5 +47,9 @@ class AppViewModel: ObservableObject{
     //MARK: - Access to model
     var AlbumStyleArr: [AppModel.stylePickerButton]{
         return appModel.albumStyleArr
+    }
+    
+    func getSelectedStyleIndex() -> Int?{
+        return appModel.getSelectedStyleIndex()
     }
 }
