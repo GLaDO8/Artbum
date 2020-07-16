@@ -26,17 +26,17 @@ struct EditView: View {
                 VStack{
                     AlbumArtPreview(
                         selectedStyle: self.playlistData.getSelectedStyleIndex() != nil ?
-                        self.playlistData.AlbumStyleArr[self.playlistData.getSelectedStyleIndex()!].styleType : nil,
+                            self.playlistData.AlbumStyleArr[self.playlistData.getSelectedStyleIndex()!].styleType : nil,
                         textAlignment: self.textAlignment[self.segmentedControlChoice],
                         title: "Rap Caviar", subtitle: "Mix",
                         titleData: self.$playlistData.titlePos,
                         subtitleData: self.$playlistData.subtitlePos,
                         amData: self.$playlistData.amBrandingPos,
                         isAMBranding: self.$appleMusicBrandingToggleValue)
-
+                    
                     TextField("Enter Title", text: self.$playlistTitleInput)
                     TextField("Enter SubTitle", text: self.$playlistSubtitleInput).textFieldStyle(RoundedBorderTextFieldStyle())
-
+                    
                     Picker(selection: self.$segmentedControlChoice, label: Text("alignment")){
                         ForEach(0..<self.alignmentImageArray.count){ index in
                             Image(systemName: self.alignmentImageArray[index]).tag(index)
@@ -62,7 +62,14 @@ struct EditView: View {
                 }
             }
         }
-    .navigationBarTitle("Make")
+        .navigationBarTitle("Make")
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        let playlist = AppViewModel()
+        return EditView().environmentObject(playlist)
     }
 }
 
@@ -78,13 +85,6 @@ struct taskFinishButtonStyle: ButtonStyle{
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        let playlist = AppViewModel()
-        return EditView().environmentObject(playlist)
-    }
-}
-
 struct AlbumArtPreview: View{
     var selectedStyle: UIImage?
     var textAlignment: Alignment = .leading
@@ -96,48 +96,46 @@ struct AlbumArtPreview: View{
     @Binding var isAMBranding: Bool
     
     var body: some View{
-        GeometryReader{ imageGeometry in
-            ZStack{
-                Image(uiImage: ((self.selectedStyle == nil ? UIImage(named: "Albumplaceholder"): self.selectedStyle)!))
-                    .resizable()
-                    .clipShape(RoundedRectangle(cornerRadius: self.albumArtCornerRadius))
-                    .frame(width: self.albumPreviewSize, height: self.albumPreviewSize)
-                    .shadow(color: self.selectedStyle == nil ? Color.gray :  Color((self.selectedStyle?.averageColor)!) , radius: self.albumArtShadowRadius, x: 0, y: 0)
-                    .overlay(
-                        ZStack{
-                            VStack{
-                                VStack(alignment: .leading){
-                                    Group{
-                                        PlaylistText(titleText: self.title, textColor: Color.white, fontWeight: .heavy, fontSize: self.albumTitleFontSize, textOpacity: 1.0)
-                                            .background( GeometryReader { textGeometry -> Color in
-                                                self.titleData = textGeometry.frame(in:.named("imageSpace"))
-                                                return Color.clear
-                                            })
-                                            .padding(.top, 28)
-                                        PlaylistText(titleText: self.subtitle, textColor: Color.white, fontWeight: .medium, fontSize: self.albumSubtitleFontSize, textOpacity: 0.64)
-                                            .background( GeometryReader { textGeometry -> Color in
-                                                self.subtitleData = textGeometry.frame(in:.named("imageSpace"))
-                                                return Color.clear
-                                            })
-                                            .padding(.top, -5)
-                                    }
-                                    .padding(.leading, 20)
+        ZStack{
+            Image(uiImage: ((self.selectedStyle == nil ? UIImage(named: "Albumplaceholder"): self.selectedStyle)!))
+                .resizable()
+                .clipShape(RoundedRectangle(cornerRadius: self.albumArtCornerRadius))
+                .frame(width: self.albumPreviewSize, height: self.albumPreviewSize)
+                .shadow(color: self.selectedStyle == nil ? Color.gray :  Color((self.selectedStyle?.averageColor)!) , radius: self.albumArtShadowRadius, x: 0, y: 0)
+                .overlay(
+                    ZStack{
+                        VStack{
+                            VStack(alignment: .leading){
+                                Group{
+                                    PlaylistText(titleText: self.title, textColor: Color.white, fontWeight: .heavy, fontSize: self.albumTitleFontSize, textOpacity: 1.0)
+                                        .background( GeometryReader { textGeometry -> Color in
+                                            self.titleData = textGeometry.frame(in:.named("imageSpace"))
+                                            return Color.clear
+                                        })
+                                        .padding(.top, 28)
+                                    PlaylistText(titleText: self.subtitle, textColor: Color.white, fontWeight: .medium, fontSize: self.albumSubtitleFontSize, textOpacity: 0.64)
+                                        .background( GeometryReader { textGeometry -> Color in
+                                            self.subtitleData = textGeometry.frame(in:.named("imageSpace"))
+                                            return Color.clear
+                                        })
+                                        .padding(.top, -5)
                                 }
-                            }
-                            .frame(width: self.albumPreviewSize, height: self.albumPreviewSize, alignment: .topLeading)
-                            if(self.isAMBranding){
-                                PlaylistText(titleText: "APPLE MUSIC", textColor: Color.white, fontWeight: .bold, fontSize: 10, textOpacity: 1.0)
-                                    .background( GeometryReader { textGeometry -> Color in
-                                        self.amData = textGeometry.frame(in:.named("imageSpace"))
-                                        return Color.clear
-                                    })
-                                    .padding(16)
-                                    .frame(width: self.albumPreviewSize, height: self.albumPreviewSize, alignment: .bottomTrailing)
+                                .padding(.leading, 20)
                             }
                         }
-                        .coordinateSpace(name: "imageSpace")
-                )
-            }
+                        .frame(width: self.albumPreviewSize, height: self.albumPreviewSize, alignment: .topLeading)
+                        if(self.isAMBranding){
+                            PlaylistText(titleText: "APPLE MUSIC", textColor: Color.white, fontWeight: .bold, fontSize: 10, textOpacity: 1.0)
+                                .background( GeometryReader { textGeometry -> Color in
+                                    self.amData = textGeometry.frame(in:.named("imageSpace"))
+                                    return Color.clear
+                                })
+                                .padding(16)
+                                .frame(width: self.albumPreviewSize, height: self.albumPreviewSize, alignment: .bottomTrailing)
+                        }
+                    }
+                    .coordinateSpace(name: "imageSpace")
+            )
         }
     }
     
