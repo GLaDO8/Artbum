@@ -19,7 +19,6 @@ struct EditView: View {
     @State var displayTitleTextBox: Int = -1
     @State var displayBoxType: Int = 0
     
-    
     let textAlignment: [Alignment] = [.leading, .center, .trailing]
     let alignmentImageArray: [String] = ["text.alignleft", "text.aligncenter", "text.alignright"]
     
@@ -27,73 +26,68 @@ struct EditView: View {
     var body: some View {
         NavigationView {
             GeometryReader{ viewGeometry in
-                ZStack{
-                    VStack{
-                        AlbumArtPreview(
-                            selectedStyle: self.playlistData.getSelectedStyleIndex() != nil ?
-                                self.playlistData.AlbumStyleArr[self.playlistData.getSelectedStyleIndex()!].styleType : nil,
-                            textAlignment: self.textAlignment[self.segmentedControlChoice],
-                            title: "Rap Caviar", subtitle: "Mix",
-                            titleData: self.$playlistData.titlePos,
-                            subtitleData: self.$playlistData.subtitlePos,
-                            amData: self.$playlistData.amBrandingPos,
-                            isAMBranding: self.$appleMusicBrandingToggleValue)
-                        
-                        HStack{
-                            Button(action: {
-                                withAnimation(.linear(duration: 0.2)){
-                                    displayTitleTextBox = 1
-                                    displayBoxType = 1
-                                }
-                            }){
-                                HStack{
-                                    Text("Title").font(.system(size: 22, weight: .semibold, design: .rounded))
-                                    Image(systemName: "pencil")
-                                }
-                                
-                            }.buttonStyle(taskFinishButtonStyle())
-                            Button(action: {
-                                withAnimation(.linear(duration: 0.2)){
-                                    displayTitleTextBox = 1
-                                    displayBoxType = 2
-                                }
-                            }){
-                                HStack{
-                                    Text("Subtitle").font(.system(size: 22, weight: .semibold, design: .rounded))
-                                    Image(systemName: "pencil")
-                                }
-                            }.buttonStyle(taskFinishButtonStyle())
-                        }
-                        .padding(.top, 10)
-                        
-//                        Picker(selection: self.$segmentedControlChoice, label: Text("alignment")){
-//                            ForEach(0..<self.alignmentImageArray.count){ index in
-//                                Image(systemName: self.alignmentImageArray[index]).tag(index)
-//                            }
-//                        }.pickerStyle(SegmentedPickerStyle())
-//                        .frame(width: viewGeometry.size.width - 100)
-                        Spacer()
-                        appleMusicBrandingToggle(toggleValue: self.$appleMusicBrandingToggleValue)
-                            .padding(.leading, 20)
-                            .padding(.bottom, 10)
-                            .frame(width: viewGeometry.size.width)
-
-                        StyleTypeMenu(selection: self.$currentSelectedPlaylistItem)
-
-                        NavigationLink(destination: ResultView(resultImage: self.playlistData.getResultingImage()), tag: 1, selection: self.$presentResult){
-                            EmptyView()
-                        }
+                VStack{
+                    AlbumArtPreview(
+                        selectedStyle: self.playlistData.getSelectedStyleIndex() != nil ?
+                            self.playlistData.AlbumStyleArr[self.playlistData.getSelectedStyleIndex()!].styleType : nil,
+                        textAlignment: self.textAlignment[self.segmentedControlChoice],
+                        title: $playlistTitleInput, subtitle: $playlistSubtitleInput,
+                        titleData: self.$playlistData.titlePos,
+                        subtitleData: self.$playlistData.subtitlePos,
+                        amData: self.$playlistData.amBrandingPos,
+                        isAMBranding: self.$appleMusicBrandingToggleValue
+                    )
+                    .padding(.top, -50)
+                    HStack{
                         Button(action: {
-                            self.playlistData.GenerateAlbumArt(title: self.playlistTitleInput, subtitle: self.playlistSubtitleInput, isBranding: self.appleMusicBrandingToggleValue)
-                            self.presentResult = 1
+                            withAnimation(.linear(duration: 0.15)){
+                                displayTitleTextBox = 1
+                                displayBoxType = 1
+                            }
                         }){
-                            Text("Done").font(.system(size: 15, weight: .medium, design: .rounded))
+                            HStack{
+                                Text("Title").font(.system(size: 22, weight: .semibold, design: .rounded))
+                                Image(systemName: "pencil")
+                            }
+                            
                         }.buttonStyle(taskFinishButtonStyle())
-                        .padding(.bottom, 20)
+                        Button(action: {
+                            withAnimation(.linear(duration: 0.15)){
+                                displayTitleTextBox = 1
+                                displayBoxType = 2
+                            }
+                        }){
+                            HStack{
+                                Text("Subtitle").font(.system(size: 22, weight: .semibold, design: .rounded))
+                                Image(systemName: "pencil")
+                            }
+                        }.buttonStyle(taskFinishButtonStyle())
                     }
-                    PopUpBox(titleText: $playlistTitleInput, subtitleText:$playlistSubtitleInput, closePopUpBox: $displayTitleTextBox, boxType: $displayBoxType)
+                    .padding(.top, 10)
+                    
+                    //                        Picker(selection: self.$segmentedControlChoice, label: Text("alignment")){
+                    //                            ForEach(0..<self.alignmentImageArray.count){ index in
+                    //                                Image(systemName: self.alignmentImageArray[index]).tag(index)
+                    //                            }
+                    //                        }.pickerStyle(SegmentedPickerStyle())
+                    //                        .frame(width: viewGeometry.size.width - 100)
                     Spacer()
+                    
+                    StyleTypeMenu(selection: self.$currentSelectedPlaylistItem, appleMusicBrandingToggleValue: $appleMusicBrandingToggleValue)
+                    
+                    NavigationLink(destination: ResultView(resultImage: self.playlistData.getResultingImage()), tag: 1, selection: self.$presentResult){
+                        EmptyView()
+                    }
+                    Button(action: {
+                        self.playlistData.GenerateAlbumArt(title: self.playlistTitleInput, subtitle: self.playlistSubtitleInput, isBranding: self.appleMusicBrandingToggleValue)
+                        self.presentResult = 1
+                    }){
+                        Text("Done").font(.system(size: 15, weight: .medium, design: .rounded))
+                    }.buttonStyle(taskFinishButtonStyle())
+                    .padding(.bottom, 20)
                 }
+                PopUpBox(titleText: $playlistTitleInput, subtitleText:$playlistSubtitleInput, closePopUpBox: $displayTitleTextBox, boxType: $displayBoxType)
+                Spacer()
             }
         }
         .navigationBarTitle("Make")
@@ -106,8 +100,8 @@ struct ContentView_Previews: PreviewProvider {
         return Group {
             EditView().environmentObject(playlist)
                 .environment(\.colorScheme, .light)
-//            EditView().environmentObject(playlist)
-//                .environment(\.colorScheme, .dark)
+            //            EditView().environmentObject(playlist)
+            //                .environment(\.colorScheme, .dark)
         }
     }
 }
@@ -131,6 +125,7 @@ struct PopUpBox: View{
     @Binding var closePopUpBox: Int
     @Binding var boxType: Int
     
+    @ViewBuilder
     var body: some View{
         ZStack{
             if closePopUpBox != -1{
@@ -138,7 +133,7 @@ struct PopUpBox: View{
                     Rectangle()
                         .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
                         .opacity(0.3)
-                    GeometryReader{ geometry in
+                    Group{
                         RoundedRectangle(cornerRadius: 16)
                             .foregroundColor(Color.white)
                             .shadow(radius: 10)
@@ -151,28 +146,39 @@ struct PopUpBox: View{
                                 }
                             }
                             .font(.headline)
-                                .padding(.top, /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                            .padding(.top, 20)
+                            Spacer()
                             Group{
                                 if(boxType == 1){
                                     TextField("Enter Title", text: $titleText)
+                                        .padding(.leading, 15)
                                 }else{
                                     TextField("Enter Subtitle", text: $subtitleText)
+                                        .padding(.leading, 15)
                                 }
                             }
-                                .textFieldStyle(DefaultTextFieldStyle())
-                                .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/, /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .frame(height: 35)
+                                    .foregroundColor(Color.gray)
+                            )
+                            .opacity(0.2)
+                            .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/, /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                            .padding(.leading, 10)
+                            .padding(.trailing, 10)
                             Spacer()
                             Button(action: {
-                                withAnimation(.linear(duration: 0.2)){
+                                withAnimation(.linear(duration: 0.15)){
                                     closePopUpBox = -1
                                 }
                             }){
-                                Text("Done").font(.system(size: 15, weight: .medium, design: .rounded))
+                                Text("Done").font(.system(size: 15, weight: .semibold, design: .rounded))
                             }.buttonStyle(taskFinishButtonStyle())
-                            .padding(.bottom, /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                            .padding(.bottom, 20)
                         }
                     }
                     .frame(width: 250, height: 200, alignment: .center)
+                    .padding(.bottom, 50)
                 }
                 .transition(.opacity)
             }
@@ -183,13 +189,14 @@ struct PopUpBox: View{
 struct AlbumArtPreview: View{
     var selectedStyle: UIImage?
     var textAlignment: Alignment = .leading
-    var title: String
-    var subtitle: String
+    @Binding var title: String
+    @Binding var subtitle: String
     @Binding var titleData: CGRect?
     @Binding var subtitleData: CGRect?
     @Binding var amData: CGRect?
     @Binding var isAMBranding: Bool
     
+    @ViewBuilder
     var body: some View{
         ZStack{
             Image(uiImage: ((self.selectedStyle == nil ? UIImage(named: "Albumplaceholder"): self.selectedStyle)!))
@@ -231,7 +238,7 @@ struct AlbumArtPreview: View{
                         }
                     }
                     .coordinateSpace(name: "imageSpace")
-            )
+                )
         }
     }
     
@@ -269,6 +276,23 @@ struct AlbumArtPreview: View{
     let albumPreviewSize: CGFloat = 240
 }
 
+
+
+struct appleMusicBrandingToggle: View{
+    @Binding var toggleValue: Bool
+    var body: some View{
+        HStack{
+            Text("Apple Music Branding")
+                .font(Font.system(size: 22.0, weight: .semibold, design: .rounded))
+                .foregroundColor(Color.black)
+            Spacer()
+            Image(systemName: toggleValue ? "checkmark.circle.fill" : "checkmark.circle").font(.system(size: 26)).onTapGesture {
+                self.toggleValue.toggle()
+            }
+        }
+    }
+}
+
 struct PlaylistStyleButton: View{
     var style: AppModel.stylePickerButton
     
@@ -285,52 +309,42 @@ struct PlaylistStyleButton: View{
                 .clipShape(Circle())
                 .frame(width: 50, height: 50)
         }
+        .padding(.top, 5)
     }
     
     //MARK: - Playlist Button Control Knobs
     let selectionIndicatorCircleWidth: CGFloat = 3.0
 }
 
-struct appleMusicBrandingToggle: View{
-    @Binding var toggleValue: Bool
-    var body: some View{
-        HStack{
-            Text("Apple Music Branding")
-                .font(Font.system(size: 22.0, weight: .semibold, design: .rounded))
-                .fontWeight(.medium)
-                .foregroundColor(Color.black)
-            Spacer()
-            Image(systemName: toggleValue ? "checkmark.circle.fill" : "checkmark.circle").font(.system(size: 26)).onTapGesture {
-                self.toggleValue.toggle()
-            }
-        }
-        .padding(.trailing, 20)
-    }
-}
-
 struct StyleTypeMenu: View{
     //remembers the current selection
     @Binding var selection: Int
+    @Binding var appleMusicBrandingToggleValue: Bool
     @EnvironmentObject var playlistData: AppViewModel
-    var menuItemNameArr:[String] = ["Gradients", "Patterns", "Images"]
+    var menuItemNameArr:[String] = ["Gradients", "Unsplash", "Patterns", "Images"]
     
     @ViewBuilder
     var body: some View{
-        VStack{
-            HStack{
-                Group{
+        VStack(alignment: .leading){
+            appleMusicBrandingToggle(toggleValue: self.$appleMusicBrandingToggleValue)
+                .padding(.leading, 25)
+                .padding(.trailing, 25)
+                .padding(.bottom, 10)
+            
+            ScrollView(.horizontal, showsIndicators: false){
+                HStack{
                     ForEach(0..<menuItemNameArr.count){ index in
                         self.getStyleTypeMenuItem(for: index).onTapGesture{
                             withAnimation(.easeInOut(duration: 0.2)){
                                 self.onTapSelectionChange(for: index)
                             }
                         }
+                        .fixedSize(horizontal: false, vertical: true)
                     }
                 }
             }
             .frame(alignment: .leading)
             .padding(.leading, 20)
-
             
             if(selection == 0){
                 ScrollView(.horizontal, showsIndicators: false){
@@ -341,7 +355,6 @@ struct StyleTypeMenu: View{
                             }
                         }
                     }
-                    .padding(.top, 5)
                     .padding(.leading, 20)
                     .padding(.bottom, 20)
                 }
@@ -356,7 +369,9 @@ struct StyleTypeMenu: View{
                 Text(self.menuItemNameArr[index])
                     .font(.system(size: 22.0, weight: .semibold, design: .rounded))
                     .foregroundColor(isActive ? Color.black : Color.gray)
-        }
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(5)
+            }
     }
     
     func onTapSelectionChange(for index: Int){

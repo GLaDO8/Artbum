@@ -24,6 +24,7 @@ class AppViewModel: ObservableObject{
         for gradientName in gradientImagesArr{
             tempArr.append(AppModel.stylePickerButton(gradientStyleName: gradientName))
         }
+        tempArr[0].isSelected = true
         return AppModel(albumStyleArr: tempArr)
     }
     
