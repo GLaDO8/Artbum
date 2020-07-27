@@ -34,10 +34,7 @@ class AppViewModel: ObservableObject{
     }
     
     func GenerateAlbumArt(title: String, subtitle: String, isBranding: Bool){
-        DispatchQueue.global(qos: .userInitiated).async {
-            self.appModel.ImageGenerator(titleLoc: self.titlePos!, subtitleLoc: self.subtitlePos!, brandingLoc: self.amBrandingPos!, titleString: title, subtitleString: subtitle, isbranding: isBranding)
-        }
-        
+        self.appModel.ImageGenerator(titleLoc: self.titlePos!, subtitleLoc: self.subtitlePos!, brandingLoc: self.amBrandingPos!, titleString: title, subtitleString: subtitle, isbranding: isBranding)
     }
     
     func getResultingImage() -> UIImage?{

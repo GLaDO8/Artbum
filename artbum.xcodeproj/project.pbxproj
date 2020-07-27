@@ -19,6 +19,7 @@
 		386FFD7424B70408000CD2AD /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386FFD7324B70408000CD2AD /* AppViewModel.swift */; };
 		386FFD7624B7055D000CD2AD /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386FFD7524B7055D000CD2AD /* AppModel.swift */; };
 		386FFD7824B7250A000CD2AD /* UIImage + AverageColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386FFD7724B7250A000CD2AD /* UIImage + AverageColor.swift */; };
+		388046A524C0A34E00D90007 /* meshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388046A424C0A34E00D90007 /* meshView.swift */; };
 		38FAE44E24B850AE0077BE2B /* Array + identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FAE44D24B850AE0077BE2B /* Array + identifiable.swift */; };
 		38FAE45024B852880077BE2B /* Array + Only.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FAE44F24B852880077BE2B /* Array + Only.swift */; };
 		38FCA69C24BA0D0D002B4D75 /* AnimatableFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCA69B24BA0D0D002B4D75 /* AnimatableFont.swift */; };
@@ -39,6 +40,7 @@
 		386FFD7324B70408000CD2AD /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		386FFD7524B7055D000CD2AD /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		386FFD7724B7250A000CD2AD /* UIImage + AverageColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + AverageColor.swift"; sourceTree = "<group>"; };
+		388046A424C0A34E00D90007 /* meshView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = meshView.swift; sourceTree = "<group>"; };
 		38FAE44D24B850AE0077BE2B /* Array + identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array + identifiable.swift"; sourceTree = "<group>"; };
 		38FAE44F24B852880077BE2B /* Array + Only.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array + Only.swift"; sourceTree = "<group>"; };
 		38FCA69B24BA0D0D002B4D75 /* AnimatableFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableFont.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 		386FFD5A24B66567000CD2AD /* artbum */ = {
 			isa = PBXGroup;
 			children = (
+				388046A424C0A34E00D90007 /* meshView.swift */,
 				386FFD5F24B66567000CD2AD /* EditView.swift */,
 				38616D7524BFAED900DA0C22 /* ResultView.swift */,
 				386FFD7524B7055D000CD2AD /* AppModel.swift */,
@@ -137,7 +140,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1150;
-				LastUpgradeCheck = 1150;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "shreyas gupta";
 				TargetAttributes = {
 					386FFD5724B66567000CD2AD = {
@@ -187,6 +190,7 @@
 				38616D7624BFAED900DA0C22 /* ResultView.swift in Sources */,
 				386FFD7624B7055D000CD2AD /* AppModel.swift in Sources */,
 				386FFD5C24B66567000CD2AD /* AppDelegate.swift in Sources */,
+				388046A524C0A34E00D90007 /* meshView.swift in Sources */,
 				386FFD5E24B66567000CD2AD /* SceneDelegate.swift in Sources */,
 				386FFD6024B66567000CD2AD /* EditView.swift in Sources */,
 				386FFD7224B6E9A9000CD2AD /* MainScreenView.swift in Sources */,
@@ -236,6 +240,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -296,6 +301,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
