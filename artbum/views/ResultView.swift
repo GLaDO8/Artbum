@@ -53,7 +53,9 @@ struct ResultView: View{
             }
             .padding(.top, 20)
         }
-        
+        .sheet(isPresented: $showSheet) {
+            ShareSheetView(activityItems: [resultImage, "Album Art"])
+        }
     }
 }
 
