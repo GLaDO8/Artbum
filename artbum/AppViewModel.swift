@@ -38,6 +38,10 @@ class AppViewModel: ObservableObject{
         self.appModel.ImageGenerator(titleLoc: self.titlePos!, subtitleLoc: self.subtitlePos!, brandingLoc: self.amBrandingPos!, titleString: title, subtitleString: subtitle, isbranding: isBranding)
     }
     
+    func saveImageToGallery(){
+        
+    }
+    
     func getResultingImage() -> UIImage?{
         return appModel.result
     }
